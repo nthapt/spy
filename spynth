@@ -4,9 +4,9 @@ import subprocess
 import time
 
 
-SERVER_IP = "192.168.1.100"  # Endereço IP do servidor remoto
-SERVER_PORT = 12345  # Porta do servidor remoto
-SLEEP_TIME = 60  # Tempo de espera entre as coletas de informaç�es (em segundos)
+SERVER_IP = "**************"
+SERVER_PORT = *********
+SLEEP_TIME = *************
 
 def collect_system_info():
   
